@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="admin">
+	<select id="login" resultType="com.bluzen.csr.ValueObject.WebAccount">
+		SELECT A.EmployeeNumber, A.Name, B.Name AS Position,
+		A.Address, A.Telephone, C.Name AS National,
+		D.Name AS Office,
+		A.Security
+		FROM `USER.Engineer` AS A
+		JOIN `CTGR.Position` AS B
+		ON A.Position = B.ProductCode
+		JOIN `CTGR.National` AS C
+		ON A.National = C.ProductCode
+		JOIN `CTGR.Office` AS D
+		ON A.Office = D.ProductCode
+		WHERE A.Identify = #{Identify}
+		AND A.Password = PASSWORD(#{Password});
+	</select>
+	
+	
+</mapper>

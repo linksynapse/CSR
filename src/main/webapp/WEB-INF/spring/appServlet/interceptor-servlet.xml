@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <interceptors>
+       <interceptor>
+       	   <mapping path="/enter"/>
+       	   <mapping path="/commuteEnter"/>
+       	   <mapping path="/exit"/>
+       	   <mapping path="/commuteExit"/>
+       	   <mapping path="/detail"/>
+       	   <mapping path="/accept"/>
+       	   <mapping path="/submit"/>
+       	   <mapping path="/readonly"/>
+       	   <mapping path="/manage"/>
+       	   <mapping path="/unassigned"/>
+       	   <mapping path="/219d770572d00a227dc481a3bdb2c51e"/>
+       	   <mapping path="/99991d972ad820b1d2f398e7a160eb03"/>
+       	   <mapping path="/d9a22d7a8178d5b42a8750123cbfe5b1"/>
+       	   <mapping path="/5fd9a718e5c073bb745cd970a6f1a5f3"/>
+       	   <mapping path="/bad097494597a4e092c1524102eeaea7"/>
+       	   
+           <beans:bean id="commonInterceptor" class="com.bluzen.csr.Authentication.AuthInterceptor"/>
+       </interceptor>
+    </interceptors>
+     
+    <beans:bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+      
+    <beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+      <beans:property name="order" value="0"/>
+    </beans:bean>
+     
+    
+       
+</beans:beans>

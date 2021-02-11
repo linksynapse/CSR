@@ -1,0 +1,47 @@
+GetNewEnquiry();
+function GetNewEnquiry(){
+	
+	$.ajax({ 
+        url: "./unassigned",
+        method: "GET",
+        dataType: "json"
+    }) 
+    .done(function(data) { 
+        if(data.Code == 0){
+        	var TableStr = "";
+            $.each(data.Data, function(i, item){
+            	
+    			TableStr += "<tr>";
+    			TableStr += "<td>" + item.caseID + "</td>";
+    			TableStr += "<td>" + item.environment + "</td>";
+    			TableStr += "<td>" + item.description + "</td>";
+    			TableStr += "<td><button class='btn btn-primary' onClick=javascript:SeeDetail('"+item.caseID+"')>Detail</button></td>"
+    			TableStr += "</tr>";
+    			
+            });
+            $('#tdata').html(TableStr);
+        }
+    })
+    .fail(function(xhr, status, errorThrown) { 
+        alert('Sever Connect Error.');
+    })
+    .always(function(xhr, status) { 
+        // loop 
+        setTimeout("GetNewEnquiry()",5000);
+    });
+}
+
+function SeeDetail(caseid){
+	var form = document.createElement("form");
+	form.setAttribute("method","GET");
+	form.setAttribute("action","./accept");
+	
+	var hiddenField = document.createElement("input");
+	hiddenField.setAttribute("type","hidden");
+	hiddenField.setAttribute("name","CaseID");
+	hiddenField.setAttribute("value",caseid);
+	form.appendChild(hiddenField);
+	
+	document.body.appendChild(form);
+	form.submit();
+}

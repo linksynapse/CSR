@@ -1,0 +1,68 @@
+$(".custom-file-input").on("change", function(e) {
+	//var fileName = $(this).val().split("\\").pop();
+	//$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+	
+	if(!e.target.files) return;
+		
+	var files = e.target.files;
+	var list = "<ul class=\"list-group\">";
+	for(var i=0; i < files.length; i++) {
+		list += "<li class=\"list-group-item\"><p class=\"float-left\" style=\"margin-bottom:0rem\">";
+		list += files[i].name;
+		list += "</p><p class=\"float-right\" style=\"margin-bottom:0rem\">";
+		list += files[i].size;
+		list += " bytes</p></li>";
+	}
+	list += "</ul>";
+	$(this).siblings(".custom-file-label").addClass("selected").html(files.length + " Files");
+	$("#filelist").html(list);
+});
+
+function refresh(){
+	location.reload(true);
+}
+
+function submit(){
+	var isCheck = false;
+	
+	if ($('#hello').get(0).checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+        isCheck = true;
+      }
+	$('#hello').get(0).classList.add('was-validated');
+	
+	if (isCheck){
+		return false;
+	}
+	
+	$('#submit').prop('disabled', true);
+	$('#mFrame').addClass('d-none');
+	$('#loader').removeClass('d-none');
+	
+	$.ajax({
+        type     : "POST",
+        cache    : false,
+        url      : "Commit",
+        data     : new FormData($('#hello').get(0)),
+        contentType: false,
+        processData: false,
+        success  : function(data) {
+        	if(data.Code == 0){
+        		$('#resultMsg').html("Your Case ID \"" + data.Data + "\" is successfully apply.");
+        	}else{
+        		$('#resultMsg').html("Apply error reason \"" + data.Msg + "\"");
+        	}
+        },
+        error: function(data){
+        	$('#resultMsg').html("Apply error reason \"" + data.Msg + "\"");
+        }
+	}).done(function(data){
+    	$('#submit').prop('disabled', false);
+    	$('#mFrame').removeClass('d-none');
+    	$('#loader').addClass('d-none');
+    	
+    	setTimeout("refresh()",5000);
+    	$('.modal').modal('show');
+    });
+}

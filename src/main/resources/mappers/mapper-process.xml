@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="process">
+	<select id="OutOfScope" resultType="com.bluzen.csr.ValueObject.ShortView">
+		SELECT A.CaseId, C.Name AS Environment, A.Description FROM `CTMR.Case` AS A
+		LEFT JOIN `CTMR.Process` AS B
+		ON A.CaseId = B.CaseId
+		JOIN `CTGR.Environment` AS C
+		ON A.Environment = C.ProductCode
+		WHERE B.Engineer = #{EmployeeNumber}
+		AND B.Status = 4
+		AND A.Disabled = 0
+	</select>
+	
+	<select id="Escalated" resultType="com.bluzen.csr.ValueObject.ShortView">
+		SELECT A.CaseId, C.Name AS Environment, A.Description FROM `CTMR.Case` AS A
+		LEFT JOIN `CTMR.Process` AS B
+		ON A.CaseId = B.CaseId
+		JOIN `CTGR.Environment` AS C
+		ON A.Environment = C.ProductCode
+		WHERE B.Engineer = #{EmployeeNumber}
+		AND B.Status = 3
+		AND A.Disabled = 0
+	</select>
+	
+	<select id="Complete" resultType="com.bluzen.csr.ValueObject.ShortView">
+		SELECT A.CaseId, C.Name AS Environment, A.Description FROM `CTMR.Case` AS A
+		LEFT JOIN `CTMR.Process` AS B
+		ON A.CaseId = B.CaseId
+		JOIN `CTGR.Environment` AS C
+		ON A.Environment = C.ProductCode
+		WHERE B.Engineer = #{EmployeeNumber}
+		AND B.Status = 2
+		AND A.Disabled = 0
+	</select>
+	
+	<select id="OnGoing" resultType="com.bluzen.csr.ValueObject.ShortView">
+		SELECT A.CaseId, C.Name AS Environment, A.Description FROM `CTMR.Case` AS A
+		LEFT JOIN `CTMR.Process` AS B
+		ON A.CaseId = B.CaseId
+		JOIN `CTGR.Environment` AS C
+		ON A.Environment = C.ProductCode
+		WHERE B.Engineer = #{EmployeeNumber}
+		AND B.Status = 1
+		AND A.Disabled = 0
+	</select>
+	
+	<select id="Unassigned" resultType="com.bluzen.csr.ValueObject.ShortView">
+		SELECT A.CaseId, C.Name AS Environment, A.Description FROM `CTMR.Case` AS A
+		LEFT JOIN `CTMR.Process` AS B
+		ON A.CaseId = B.CaseId
+		JOIN `CTGR.Environment` AS C
+		ON A.Environment = C.ProductCode
+		AND B.Status = 0
+		AND A.Disabled = 0
+	</select>
+	
+	<select id="Detail" resultType="com.bluzen.csr.ValueObject.CaseDetail">
+		SELECT A.Name, A.Telephone, A.Email, C.Name AS Environment, D.Name AS Country, A.CaseID, A.Address, E.Name AS Status, A.Description, A.ApplyDateTime, B.RootCause, B.Solution, F.Name AS Engineer, B.TaskClass, B.ContactType FROM `CTMR.Case` AS A
+		LEFT JOIN `CTMR.Process` AS B
+		ON A.CaseId = B.CaseId
+		LEFT JOIN `CTGR.Environment` AS C
+		ON A.Environment = C.ProductCode
+		LEFT JOIN `CTGR.Country` AS D
+		ON A.Country = D.ProductCode
+		LEFT JOIN `CTGR.Status` AS E
+		ON B.Status = E.ProductCode
+		LEFT JOIN `USER.Engineer` AS F
+		ON B.Engineer = F.EmployeeNumber
+		WHERE A.CaseId = #{CaseID}
+	</select>
+	
+	<select id="Imgload" resultType="com.bluzen.csr.ValueObject.FileInfo">
+		SELECT OriginalFileName, SaveFileName FROM `FILES.Upload`
+		WHERE CaseId = #{CaseID}
+	</select>
+	
+	<update id="ChangeStatus">
+		UPDATE `CTMR.Process` SET Status = ${Status}, Engineer = #{EmployeeId}, RootCause = #{RootCause}, Solution = #{Solution}, ContactType = ${ContactType}, TaskClass = #{Taskclass} WHERE CaseId = #{CaseID}
+	</update>
+	
+	<update id="AcceptTimeTick">
+		UPDATE `CTMR.Process` SET AcceptTime = NOW() WHERE CaseId = #{CaseID}
+	</update>
+	
+	<update id="ClearTimeTick">
+		UPDATE `CTMR.Process` SET ClearTime = NOW() WHERE CaseId = #{CaseID}
+	</update>
+	
+	<select id="ManageView" resultType="com.bluzen.csr.ValueObject.ManageCase">
+		SELECT A.CaseId, D.Name AS Country,
+		A.Name , C.Name AS ContactType,
+		A.Address, G.Name AS Engineer,
+		A.ApplyDateTime AS 'ApplyStart', A.ApplyDateTime AS 'ApplyEnd',
+		B.AcceptTime AS 'OnSiteStart', B.ClearTime AS 'OnSiteEnd',
+		F.Name AS Status, B.TaskClass,
+		A.Description, B.RootCause, B.Solution FROM `CTMR.Case` AS A
+		LEFT JOIN `CTMR.Process` AS B
+		ON A.CaseId = B.CaseId
+		LEFT JOIN `CTGR.ContactType` AS C
+		ON B.ContactType = C.ProductCode 
+		LEFT JOIN `CTGR.Country` AS D
+		ON A.Country = D.ProductCode 
+		LEFT JOIN `CTGR.Environment` AS E
+		ON A.Environment = E.ProductCode 
+		LEFT JOIN `CTGR.Status` AS F
+		ON B.Status = F.ProductCode
+		LEFT JOIN `USER.Engineer` AS G
+		ON B.Engineer = G.EmployeeNumber
+		WHERE A.Disabled = 0
+		AND A.ApplyDateTime BETWEEN #{Start} AND #{End}
+		AND IFNULL(D.Name,"") LIKE CONCAT('%',#{Keyword},'%')
+	</select>
+	
+	<update id="Disable">
+		UPDATE `CTMR.Case` SET Disabled = 1 WHERE CaseId = #{CaseID}
+	</update>
+	
+	<select id="Location" resultType="com.bluzen.csr.ValueObject.Category">
+		SELECT LocationCode AS Value, Name FROM `CMMT.Location`
+	</select>
+	
+	<select id="GeoValue" resultType="com.bluzen.csr.ValueObject.GeoLocation">
+		SELECT Latitude AS latitude, Longitude AS longitude, Accuracy AS accuracy FROM `CMMT.Location` WHERE LocationCode = ${Location}
+	</select>
+	
+	<insert id="CommuteHistory">
+		INSERT INTO `USER.Commute` VALUES (#{EmployeeNumber}, CURRENT_TIMESTAMP(), ${Type}, #{OriginalFileName}, #{SaveFileName}, ${latitude}, ${longitude}, ${Location}, ${Result})
+	</insert>
+</mapper>

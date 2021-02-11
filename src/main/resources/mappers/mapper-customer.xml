@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="csr">
+	<select id="apply" resultType="String">
+		CALL APPLY(#{CaseId},#{Name},#{Telephone},#{Email},${Environment},${Country},#{Address},#{Description});
+	</select>
+	
+	<insert id="files">
+		INSERT INTO `FILES.Upload` VALUES (#{CaseId}, #{OriginalFileName}, #{SaveFileName});
+	</insert>
+	
+	<delete id="rollbackUpload">
+		DELETE FROM `FILES.Upload` WHERE CaseId = #{CaseId};
+	</delete>
+	
+	<delete id="rollbackCase">
+		DELETE FROM `CTMR.Case` WHERE CaseId = #{CaseId};
+	</delete>
+	
+	<select id="getEnvironment" resultType="com.bluzen.csr.ValueObject.Category">
+		SELECT ProductCode AS Value, Name FROM `CTGR.Environment`;
+	</select>
+	
+	<select id="getCountry" resultType="com.bluzen.csr.ValueObject.Category">
+		SELECT ProductCode AS Value, Name FROM `CTGR.Country`;
+	</select>
+</mapper>

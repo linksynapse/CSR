@@ -1,0 +1,29 @@
+$(document).ready(function(){
+		$(".form-signin").bind("submit",function(){
+			var id = $('#Identify').val();
+			var pw = $('#Password').val();
+			
+			$.ajax({
+	            type     : "POST",
+	            url      : "login",
+	            dataType : "json",
+	            data     : {
+	            	"Identify":id,
+	            	"Password":pw
+	            },
+	            success  : function(data) {
+	            	if(data.Code == 0){
+	            		window.location.href = "./bad097494597a4e092c1524102eeaea7";
+	            	}else{
+	            		alert("Invalid account.");
+	            	}
+					
+	            },
+	            error: function(data){
+	            	alert(data.Msg);
+	            }
+	    	});
+			
+			return false;
+		});
+	});

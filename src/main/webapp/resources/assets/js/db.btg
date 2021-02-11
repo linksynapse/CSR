@@ -1,0 +1,181 @@
+$('#ContactType').val("${Items.getContactType()}");
+
+function Save(caseid){
+	var form = document.createElement("form");
+	form.setAttribute("method","POST");
+	form.setAttribute("action","./submit");
+	
+	var hiddenField = document.createElement("input");
+	hiddenField.setAttribute("type","hidden");
+	hiddenField.setAttribute("name","CaseID");
+	hiddenField.setAttribute("value",caseid);
+	form.appendChild(hiddenField);
+	
+	var _hiddenField = document.createElement("input");
+	_hiddenField.setAttribute("type","hidden");
+	_hiddenField.setAttribute("name","Status");
+	_hiddenField.setAttribute("value",5);
+	form.appendChild(_hiddenField);
+	
+	var __hiddenField = document.createElement("input");
+	__hiddenField.setAttribute("type","hidden");
+	__hiddenField.setAttribute("name","RootCause");
+	__hiddenField.setAttribute("value",$('#RootCause').val());
+	form.appendChild(__hiddenField);
+	
+	var ___hiddenField = document.createElement("input");
+	___hiddenField.setAttribute("type","hidden");
+	___hiddenField.setAttribute("name","Solution");
+	___hiddenField.setAttribute("value",$('#Solution').val());
+	form.appendChild(___hiddenField);
+	
+	var ____hiddenField = document.createElement("input");
+	____hiddenField.setAttribute("type","hidden");
+	____hiddenField.setAttribute("name","Taskclass");
+	____hiddenField.setAttribute("value",$('#TaskClass').val());
+	form.appendChild(____hiddenField);
+	
+	var _____hiddenField = document.createElement("input");
+	_____hiddenField.setAttribute("type","hidden");
+	_____hiddenField.setAttribute("name","ContactType");
+	_____hiddenField.setAttribute("value",$('#ContactType option:selected').val());
+	form.appendChild(_____hiddenField);
+	
+	document.body.appendChild(form);
+	form.submit();
+}
+
+function Clear(caseid){
+	var form = document.createElement("form");
+	form.setAttribute("method","POST");
+	form.setAttribute("action","./submit");
+	
+	var hiddenField = document.createElement("input");
+	hiddenField.setAttribute("type","hidden");
+	hiddenField.setAttribute("name","CaseID");
+	hiddenField.setAttribute("value",caseid);
+	form.appendChild(hiddenField);
+	
+	var _hiddenField = document.createElement("input");
+	_hiddenField.setAttribute("type","hidden");
+	_hiddenField.setAttribute("name","Status");
+	_hiddenField.setAttribute("value",2);
+	form.appendChild(_hiddenField);
+	
+	var __hiddenField = document.createElement("input");
+	__hiddenField.setAttribute("type","hidden");
+	__hiddenField.setAttribute("name","RootCause");
+	__hiddenField.setAttribute("value",$('#RootCause').val());
+	form.appendChild(__hiddenField);
+	
+	var ___hiddenField = document.createElement("input");
+	___hiddenField.setAttribute("type","hidden");
+	___hiddenField.setAttribute("name","Solution");
+	___hiddenField.setAttribute("value",$('#Solution').val());
+	form.appendChild(___hiddenField);
+	
+	var ____hiddenField = document.createElement("input");
+	____hiddenField.setAttribute("type","hidden");
+	____hiddenField.setAttribute("name","Taskclass");
+	____hiddenField.setAttribute("value",$('#TaskClass').val());
+	form.appendChild(____hiddenField);
+	
+	var _____hiddenField = document.createElement("input");
+	_____hiddenField.setAttribute("type","hidden");
+	_____hiddenField.setAttribute("name","ContactType");
+	_____hiddenField.setAttribute("value",$('#ContactType option:selected').val());
+	form.appendChild(_____hiddenField);
+	
+	document.body.appendChild(form);
+	form.submit();
+}
+
+function OutOfScope(caseid){
+	var form = document.createElement("form");
+	form.setAttribute("method","POST");
+	form.setAttribute("action","./submit");
+	
+	var hiddenField = document.createElement("input");
+	hiddenField.setAttribute("type","hidden");
+	hiddenField.setAttribute("name","CaseID");
+	hiddenField.setAttribute("value",caseid);
+	form.appendChild(hiddenField);
+	
+	var _hiddenField = document.createElement("input");
+	_hiddenField.setAttribute("type","hidden");
+	_hiddenField.setAttribute("name","Status");
+	_hiddenField.setAttribute("value",4);
+	form.appendChild(_hiddenField);
+	
+	var __hiddenField = document.createElement("input");
+	__hiddenField.setAttribute("type","hidden");
+	__hiddenField.setAttribute("name","RootCause");
+	__hiddenField.setAttribute("value",$('#RootCause').val());
+	form.appendChild(__hiddenField);
+	
+	var ___hiddenField = document.createElement("input");
+	___hiddenField.setAttribute("type","hidden");
+	___hiddenField.setAttribute("name","Solution");
+	___hiddenField.setAttribute("value",$('#Solution').val());
+	form.appendChild(___hiddenField);
+	
+	var ____hiddenField = document.createElement("input");
+	____hiddenField.setAttribute("type","hidden");
+	____hiddenField.setAttribute("name","Taskclass");
+	____hiddenField.setAttribute("value",$('#TaskClass').val());
+	form.appendChild(____hiddenField);
+	
+	var _____hiddenField = document.createElement("input");
+	_____hiddenField.setAttribute("type","hidden");
+	_____hiddenField.setAttribute("name","ContactType");
+	_____hiddenField.setAttribute("value",$('#ContactType option:selected').val());
+	form.appendChild(_____hiddenField);
+	
+	document.body.appendChild(form);
+	form.submit();
+}
+
+function Escalated(caseid){
+	var form = document.createElement("form");
+	form.setAttribute("method","POST");
+	form.setAttribute("action","./submit");
+	
+	var hiddenField = document.createElement("input");
+	hiddenField.setAttribute("type","hidden");
+	hiddenField.setAttribute("name","CaseID");
+	hiddenField.setAttribute("value",caseid);
+	form.appendChild(hiddenField);
+	
+	var _hiddenField = document.createElement("input");
+	_hiddenField.setAttribute("type","hidden");
+	_hiddenField.setAttribute("name","Status");
+	_hiddenField.setAttribute("value",3);
+	form.appendChild(_hiddenField);
+	
+	var __hiddenField = document.createElement("input");
+	__hiddenField.setAttribute("type","hidden");
+	__hiddenField.setAttribute("name","RootCause");
+	__hiddenField.setAttribute("value",$('#RootCause').val());
+	form.appendChild(__hiddenField);
+	
+	var ___hiddenField = document.createElement("input");
+	___hiddenField.setAttribute("type","hidden");
+	___hiddenField.setAttribute("name","Solution");
+	___hiddenField.setAttribute("value",$('#Solution').val());
+	form.appendChild(___hiddenField);
+	
+	var ____hiddenField = document.createElement("input");
+	____hiddenField.setAttribute("type","hidden");
+	____hiddenField.setAttribute("name","Taskclass");
+	____hiddenField.setAttribute("value",$('#TaskClass').val());
+	form.appendChild(____hiddenField);
+	
+	var _____hiddenField = document.createElement("input");
+	_____hiddenField.setAttribute("type","hidden");
+	_____hiddenField.setAttribute("name","ContactType");
+	_____hiddenField.setAttribute("value",$('#ContactType option:selected').val());
+	form.appendChild(_____hiddenField);
+	
+	document.body.appendChild(form);
+	form.submit();
+}
