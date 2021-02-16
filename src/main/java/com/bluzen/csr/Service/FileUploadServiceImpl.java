@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Repository
 public class FileUploadServiceImpl implements FileUploadService{
 	private static final Logger logger = LoggerFactory.getLogger(FileUploadService.class);
-	private static final String SAVE_PATH = "/opt/tomcat/webapps/CSR/resources/uploads/";//"/Users/ktlee/Documents/workspace-sts-3.9.13.RELEASE/CSRV2/src/main/webapp/resources/uploads";
+	private static final String SAVE_PATH = "/opt/tomcat/route/webapps/CSR/resources/uploads/";//"/Users/ktlee/Documents/workspace-sts-3.9.13.RELEASE/CSRV2/src/main/webapp/resources/uploads";
 	private static final String PREFIX_URL = "/uploads/";
 	
 	@Override
