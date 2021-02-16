@@ -14,7 +14,7 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
     	<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-    	<property name="url" value="jdbc:mysql://10.100.100.70:3306/CSRV2?useSSL=false"></property>
+    	<property name="url" value="jdbc:mysql://192.168.10.30:3306/CSRV2?useSSL=false"></property>
     	<property name="username" value="dba"></property>
     	<property name="password" value="8luzen18!@"></property>
 	</bean>
