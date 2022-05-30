@@ -14,9 +14,9 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
     	<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-    	<property name="url" value="jdbc:mysql://192.168.10.30:3306/CSRV2?useSSL=false"></property>
-    	<property name="username" value="dba"></property>
-    	<property name="password" value="8luzen18!@"></property>
+    	<property name="url" value="#{systemEnvironment['DATABASE_URL']}"></property>
+    	<property name="username" value="#{systemEnvironment['DATABASE_ADMIN']}"></property>
+    	<property name="password" value="#{systemEnvironment['DATABASE_PASSWORD']}"></property>
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -32,10 +32,10 @@
     <bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
     
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-    	<property name="host" value="smtp.office365.com" />
-    	<property name="port" value="587" />
-    	<property name="username" value="callcentre@bluzen.com" />
-    	<property name="password" value="c@llcentre!@123" />
+    	<property name="host" value="#{systemEnvironment['SMTP_HOST']}" />
+    	<property name="port" value="#{systemEnvironment['SMTP_PORT']}" />
+    	<property name="username" value="#{systemEnvironment['SMTP_AUTH_ID']}" />
+    	<property name="password" value="#{systemEnvironment['SMTP_AUTH_PW']}" />
     	<property name="javaMailProperties">
     	<props>
     		<prop key="mail.smtp.auth">true</prop>
